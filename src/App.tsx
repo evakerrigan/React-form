@@ -8,9 +8,12 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/uncontrolled-form" element={<UncontrolledForm />} />
-        <Route path="/react-hook-form" element={<ReactHookForm />} />
+        <Route path="/React-form/" element={<Main />} />
+        <Route
+          path="/React-form/uncontrolled-form"
+          element={<UncontrolledForm />}
+        />
+        <Route path="/React-form/react-hook-form" element={<ReactHookForm />} />
       </Routes>
     </Router>
   );

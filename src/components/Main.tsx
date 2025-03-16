@@ -6,13 +6,12 @@ export const Main = () => {
       <nav>
         <ul>
           <li>
-            <Link to="/">Главная</Link>
+            <Link to="/React-form/uncontrolled-form">Форма без контроля</Link>
           </li>
           <li>
-            <Link to="/uncontrolled-form">Форма без контроля</Link>
-          </li>
-          <li>
-            <Link to="/react-hook-form">Форма с React Hook Form</Link>
+            <Link to="/React-form/react-hook-form">
+              Форма с React Hook Form
+            </Link>
           </li>
         </ul>
       </nav>
