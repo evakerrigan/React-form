@@ -1,14 +1,44 @@
-import { StrictMode } from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import { createRoot } from 'react-dom/client';
+import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import store from './store/store';
-import App from './App.tsx';
+import './index.css';
+import App from './App';
+import UncontrolledFormPage from './pages/UncontrolledFormPage';
+import HookFormPage from './pages/HookFormPage';
+import MainPage from './pages/MainPage';
+import { store } from './store';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <StrictMode>
+const router = createHashRouter([
+  {
+    path: '/',
+    element: <App />,
+    children: [
+      {
+        index: true,
+        element: <MainPage />,
+      },
+      {
+        path: 'uncontrolled-form',
+        element: <UncontrolledFormPage />,
+      },
+      {
+        path: 'hook-form',
+        element: <HookFormPage />,
+      },
+    ],
+  },
+  {
+    path: '*',
+    element: <div>404</div>,
+  },
+]);
+
+const rootElement = document.getElementById('root');
+
+if (rootElement) {
+  createRoot(rootElement).render(
     <Provider store={store}>
-      <App />
+      <RouterProvider router={router} />
     </Provider>
-  </StrictMode>
-);
+  );
+}

@@ -1,22 +1,8 @@
-import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Main } from './components/Main';
-import { UncontrolledForm } from './components/UncontrolledForm';
-import { ReactHookForm } from './components/ReactHookForm';
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/React-form/" element={<Main />} />
-        <Route
-          path="/React-form/uncontrolled-form"
-          element={<UncontrolledForm />}
-        />
-        <Route path="/React-form/react-hook-form" element={<ReactHookForm />} />
-      </Routes>
-    </Router>
-  );
-}
+const App: React.FC = () => {
+  return <Outlet />;
+};
 
 export default App;
