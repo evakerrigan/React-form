@@ -1,12 +1,8 @@
-import './App.css';
-import { Main } from './components/Main';
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 
-function App() {
-  return (
-    <>
-      <Main />
-    </>
-  );
-}
+const App: React.FC = () => {
+  return <Outlet />;
+};
 
 export default App;
