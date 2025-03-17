@@ -12,7 +12,7 @@ export const Card: React.FC<Props> = ({ submission, latestSubmissionId }) => {
       key={submission.id}
       className={` rounded-lg shadow-md p-5 mb-5  ${
         submission.id === latestSubmissionId
-          ? 'border-2 border-blue-500 animate-pulse'
+          ? 'border-2 border-purple-500 animate-bounce'
           : ''
       } ${
         submission.formType === 'uncontrolled' ? 'bg-pink-200' : 'bg-purple-200'
@@ -23,9 +23,6 @@ export const Card: React.FC<Props> = ({ submission, latestSubmissionId }) => {
           ? 'Uncontrolled Form'
           : 'React Hook Form'}
       </h3>
-      <p className="text-sm text-gray-500 mb-4">
-        {new Date(submission.timestamp).toLocaleString()}
-      </p>
       <div className="grid grid-cols-2 gap-3">
         <div>
           <p className="font-semibold">Name:</p>

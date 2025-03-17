@@ -20,6 +20,7 @@ export const ReactHookFormPage: React.FC = () => {
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [country, setCountry] = useState('');
+  const [fileName, setFileName] = useState<string>('');
 
   const {
     register,
@@ -54,7 +55,10 @@ export const ReactHookFormPage: React.FC = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      setFileName(file.name);
       setValue('image', file as File, { shouldValidate: true });
+    } else {
+      setFileName('');
     }
   };
 
@@ -78,7 +82,6 @@ export const ReactHookFormPage: React.FC = () => {
         country: data.country,
         image: imageBase64,
         formType: 'hookForm' as const,
-        timestamp: Date.now(),
       };
 
       dispatch(addFormData(submissionData));
@@ -217,17 +220,32 @@ export const ReactHookFormPage: React.FC = () => {
             <label htmlFor="image" className="block font-medium mb-1">
               Image:
             </label>
-            <input
-              id="image"
-              type="file"
-              accept=".jpg,.jpeg,.png"
-              ref={(e) => {
-                register('image').ref(e);
-                fileInputRef.current = e;
-              }}
-              onChange={handleFileChange}
-              className={`w-full p-2 border rounded ${errors.image ? 'border-red-500' : 'border-white-300'}`}
-            />
+            <div className="relative">
+              <input
+                type="file"
+                id="image"
+                accept=".jpg,.jpeg,.png"
+                ref={(e) => {
+                  register('image').ref(e);
+                  fileInputRef.current = e;
+                }}
+                onChange={handleFileChange}
+                className="absolute inset-0 opacity-0 w-full h-full cursor-pointer z-10"
+              />
+              <div
+                className={`w-full p-2 border rounded flex items-center ${errors.image ? 'border-red-500' : 'border-white-300'}`}
+              >
+                <span className="flex-grow truncate">
+                  {fileName || 'Файл не выбран'}
+                </span>
+                <button
+                  type="button"
+                  className="bg-purple-500 text-white px-3 py-1 rounded"
+                >
+                  Выбрать файл
+                </button>
+              </div>
+            </div>
             <p className="text-xs text-gray-500 mt-1">JPG. Max: 5MB</p>
             {errors.image && (
               <p className="text-red-500 text-sm mt-1">

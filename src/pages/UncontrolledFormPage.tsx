@@ -71,7 +71,6 @@ export const UncontrolledFormPage: React.FC = () => {
         country: formData.country,
         image: imageBase64,
         formType: 'uncontrolled' as const,
-        timestamp: Date.now(),
       };
 
       dispatch(addFormData(submissionData));

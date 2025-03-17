@@ -11,7 +11,6 @@ interface FormData {
   image: string | null;
   country: string;
   formType: 'uncontrolled' | 'hookForm';
-  timestamp: number;
 }
 
 interface FormState {
