@@ -4,7 +4,9 @@ interface PasswordStrengthProps {
   strength: number;
 }
 
-const PasswordStrength: React.FC<PasswordStrengthProps> = ({ strength }) => {
+export const PasswordStrength: React.FC<PasswordStrengthProps> = ({
+  strength,
+}) => {
   const getColorClass = (strength: number): string => {
     switch (strength) {
       case 0:
@@ -47,5 +49,3 @@ const PasswordStrength: React.FC<PasswordStrengthProps> = ({ strength }) => {
     </div>
   );
 };
-
-export default PasswordStrength;

@@ -10,8 +10,8 @@ import {
   FormSchemaType,
   checkPasswordStrength,
 } from '../validations/formSchema';
-import PasswordStrength from '../components/PasswordStrength';
-import CountryAutocomplete from '../components/CountryAutocomplete';
+import { PasswordStrength } from '../components/PasswordStrength';
+import { CountryAutocomplete } from '../components/CountryAutocomplete';
 import { fileToBase64 } from '../utils';
 
 export const ReactHookFormPage: React.FC = () => {

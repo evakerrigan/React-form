@@ -9,7 +9,7 @@ interface CountryAutocompleteProps {
   error?: string;
 }
 
-const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
+export const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
   id,
   value,
   onChange,
@@ -104,5 +104,3 @@ const CountryAutocomplete: React.FC<CountryAutocompleteProps> = ({
     </div>
   );
 };
-
-export default CountryAutocomplete;
