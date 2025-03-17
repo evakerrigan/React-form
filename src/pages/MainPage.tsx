@@ -10,7 +10,7 @@ interface FormState {
   latestSubmissionId: string | null;
 }
 
-const MainPage: React.FC = () => {
+export const MainPage: React.FC = () => {
   const { submissions, latestSubmissionId } = useAppSelector(
     (state) => state.form as FormState
   );
@@ -64,5 +64,3 @@ const MainPage: React.FC = () => {
     </div>
   );
 };
-
-export default MainPage;

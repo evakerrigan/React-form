@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { addFormData } from '../store/formSlice';
 import {
@@ -10,11 +10,11 @@ import {
   FormSchemaType,
   checkPasswordStrength,
 } from '../validations/formSchema';
-import { fileToBase64 } from '../utils/fileUtils';
 import PasswordStrength from '../components/PasswordStrength';
 import CountryAutocomplete from '../components/CountryAutocomplete';
+import { fileToBase64 } from '../utils';
 
-const HookFormPage: React.FC = () => {
+export const ReactHookFormPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [passwordStrength, setPasswordStrength] = useState(0);
@@ -29,7 +29,7 @@ const HookFormPage: React.FC = () => {
     setValue,
     trigger,
   } = useForm<FormSchemaType>({
-    resolver: zodResolver(formSchema),
+    resolver: yupResolver(formSchema),
     mode: 'onChange',
   });
 
@@ -64,7 +64,7 @@ const HookFormPage: React.FC = () => {
     try {
       let imageBase64 = null;
       if (data.image) {
-        imageBase64 = await fileToBase64(data.image);
+        imageBase64 = await fileToBase64(data.image as File);
       }
 
       const submissionData = {
@@ -74,7 +74,7 @@ const HookFormPage: React.FC = () => {
         email: data.email,
         password: data.password,
         gender: data.gender,
-        acceptTerms: data.acceptTerms,
+        acceptTerms: data.acceptTerms || false,
         country: data.country,
         image: imageBase64,
         formType: 'hookForm' as const,
@@ -121,7 +121,7 @@ const HookFormPage: React.FC = () => {
               id="age"
               type="number"
               min="0"
-              {...register('age', { valueAsNumber: true })}
+              {...register('age')}
               className={`w-full p-2 border rounded ${errors.age ? 'border-red-500' : 'border-white-300'}`}
             />
             {errors.age && (
@@ -267,5 +267,3 @@ const HookFormPage: React.FC = () => {
     </div>
   );
 };
-
-export default HookFormPage;

@@ -3,10 +3,8 @@ import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
-import UncontrolledFormPage from './pages/UncontrolledFormPage';
-import HookFormPage from './pages/HookFormPage';
-import MainPage from './pages/MainPage';
 import { store } from './store';
+import { MainPage, ReactHookFormPage, UncontrolledFormPage } from './pages';
 
 const router = createHashRouter([
   {
@@ -23,7 +21,7 @@ const router = createHashRouter([
       },
       {
         path: 'hook-form',
-        element: <HookFormPage />,
+        element: <ReactHookFormPage />,
       },
     ],
   },

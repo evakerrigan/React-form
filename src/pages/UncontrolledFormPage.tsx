@@ -5,12 +5,13 @@ import { useAppDispatch } from '../hooks/reduxHooks';
 import { addFormData } from '../store/formSlice';
 import { formSchema } from '../validations/formSchema';
 import { checkPasswordStrength } from '../validations/formSchema';
-import { fileToBase64 } from '../utils/fileUtils';
 import PasswordStrength from '../components/PasswordStrength';
 import CountryAutocomplete from '../components/CountryAutocomplete';
 import { FormError } from '../types';
+import * as yup from 'yup';
+import { fileToBase64 } from '../utils';
 
-const UncontrolledFormPage: React.FC = () => {
+export const UncontrolledFormPage: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -52,21 +53,7 @@ const UncontrolledFormPage: React.FC = () => {
         image: imageRef.current?.files?.[0] || null,
       };
 
-      const validationResult = formSchema.safeParse({
-        ...formData,
-        age: Number(formData.age),
-      });
-
-      if (!validationResult.success) {
-        const formattedErrors: FormError = {};
-        validationResult.error.errors.forEach((error) => {
-          const path = error.path[0] as string;
-          formattedErrors[path as keyof FormError] = error.message;
-        });
-        setErrors(formattedErrors);
-        setIsSubmitting(false);
-        return;
-      }
+      await formSchema.validate(formData, { abortEarly: false });
 
       let imageBase64 = null;
       if (imageRef.current?.files?.[0]) {
@@ -91,7 +78,16 @@ const UncontrolledFormPage: React.FC = () => {
 
       navigate('/');
     } catch (error) {
-      console.error('Error submitting form:', error);
+      if (error instanceof yup.ValidationError) {
+        const formattedErrors: FormError = {};
+        error.inner.forEach((err) => {
+          const path = err.path as string;
+          formattedErrors[path as keyof FormError] = err.message;
+        });
+        setErrors(formattedErrors);
+      } else {
+        console.error('Error submitting form:', error);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -261,5 +257,3 @@ const UncontrolledFormPage: React.FC = () => {
     </div>
   );
 };
-
-export default UncontrolledFormPage;
